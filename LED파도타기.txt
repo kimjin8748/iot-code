@@ -1,0 +1,32 @@
+// LED 파도타기
+#define RED 13
+#define BLUE 12
+#define YELLOW 11
+#define ORANGE 10
+void setup()
+{
+  pinMode(RED, OUTPUT);
+  pinMode(BLUE, OUTPUT);
+  pinMode(YELLOW, OUTPUT);
+  pinMode(ORANGE, OUTPUT);
+}
+
+void loop()
+{
+  digitalWrite(RED, HIGH);
+  delay(1000);
+  
+  digitalWrite(RED, LOW);
+  digitalWrite(BLUE, HIGH);
+  delay(1000);
+  
+  digitalWrite(BLUE, LOW);
+  digitalWrite(YELLOW, HIGH);
+  delay(1000);
+  
+  digitalWrite(YELLOW, LOW);
+  digitalWrite(ORANGE, HIGH);
+  delay(1000);
+  
+  digitalWrite(ORANGE, LOW);
+}

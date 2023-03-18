@@ -1,0 +1,67 @@
+// C++ code
+//
+#define RED 11
+#define GREEN 10
+#define BLUE 9
+#define R_B 7
+#define G_B 6
+#define B_B 5
+
+int r=0, g=0, b=0;
+
+int buttonState = 0; // 버튼의 현재 상황을 확인하는 변수 초기화
+
+void setup()
+{
+  pinMode(R_B, INPUT);
+  pinMode(G_B, INPUT);
+  pinMode(B_B, INPUT);
+  Serial.begin(9600); // serial통신을 초기화 해주는 함수
+}
+
+void loop()
+{
+  if(digitalRead(R_B)==HIGH) {
+    ++r;
+    if(r>255){
+      r=0;
+    }
+  }
+  
+  if(digitalRead(G_B)==HIGH) {
+    ++g;
+    if(g>255){
+      g=0;
+    }
+  }
+  
+  if(digitalRead(B_B)==HIGH) {
+    ++b;
+    if(b>255){
+      b=0;
+    }
+  }
+  
+  analogWrite(RED, r);
+  analogWrite(GREEN, g);
+  analogWrite(BLUE, b);
+  delay(10);
+  
+  //serial통신을 구동하는 방법
+  if(digitalRead(7)== HIGH) {
+    buttonState = digitalRead(7);
+    Serial.println(buttonState);
+  	delay(10);
+  }
+  else if(digitalRead(6)== HIGH) {
+    buttonState = digitalRead(6);
+    Serial.println(buttonState);
+  	delay(10);
+  }
+  else{
+    buttonState = digitalRead(5);
+  	Serial.println(buttonState);
+  	delay(10);
+  }
+  
+}

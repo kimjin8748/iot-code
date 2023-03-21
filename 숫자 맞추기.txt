@@ -1,0 +1,44 @@
+void setup() {
+  Serial.begin(9600); // 시리얼 통신 초기화
+  randomSeed(analogRead(0)); // 랜덤 숫자 생성을 위한 시드 설정
+  pinMode(11, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(9, OUTPUT);
+}
+
+void loop() {
+  int answer = random(10); // 0~9 중 랜덤으로 하나 선택
+  int guess; // 사용자의 추측을 저장할 변수
+
+  Serial.println("Guess a number between 0 and 9:"); // 사용자에게 추측할 숫자 입력 요청
+
+  for (int i = 0; i < 2; i++) { // 최대 2번까지 추측 가능
+    while (!Serial.available()); // 사용자가 입력할 때까지 대기
+    guess = Serial.parseInt(); // 사용자가 입력한 숫자를 저장
+    Serial.print("You guessed: ");
+    Serial.println(guess);
+
+    if (guess == answer) { // 추측이 맞았을 경우
+      Serial.println("Blue"); // Blue 불 켜기
+      digitalWrite(11, HIGH);
+      return;
+    }
+  }
+
+  for (int i = 2; i < 4; i++) { // 3~4번까지 추측 가능
+    while (!Serial.available()); // 사용자가 입력할 때까지 대기
+    guess = Serial.parseInt(); // 사용자가 입력한 숫자를 저장
+    Serial.print("You guessed: ");
+    Serial.println(guess);
+
+    if (guess == answer) { // 추측이 맞았을 경우
+      Serial.println("Yellow"); // Yellow 불 켜기
+      digitalWrite(10, HIGH);
+      return;
+    }
+  }
+
+  // 추측이 실패했을 경우
+  Serial.println("Red"); // Red 불 켜기
+  digitalWrite(9, HIGH);
+}

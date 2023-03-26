@@ -1,0 +1,51 @@
+// R, G, B LED 핀 번호
+const int R_LED_PIN = 9;
+const int G_LED_PIN = 10;
+const int B_LED_PIN = 11;
+
+// B LED Fading 속도 (1 ~ 255)
+const int B_FADE_SPEED = 5;
+
+void setup() {
+  // 핀 모드 설정
+  pinMode(R_LED_PIN, OUTPUT);
+  pinMode(G_LED_PIN, OUTPUT);
+  pinMode(B_LED_PIN, OUTPUT);
+}
+
+void loop() {
+  // R LED Blink
+  for (int i = 0; i < 8; i++) {
+    digitalWrite(R_LED_PIN, HIGH);  // LED 켜기
+    delay(1000);  // 1초 대기
+    digitalWrite(R_LED_PIN, LOW);  // LED 끄기
+    delay(1000);  // 1초 대기
+  }
+
+  // G LED Blink
+  for (int i = 0; i < 4; i++) {
+    digitalWrite(G_LED_PIN, HIGH);  // LED 켜기
+    delay(1000);  // 1초 대기
+    digitalWrite(G_LED_PIN, LOW);  // LED 끄기
+    delay(1000);  // 1초 대기
+  }
+
+  // B LED Blink & Fade
+  for (int i = 0; i < 2; i++) {
+    // Blink
+    digitalWrite(B_LED_PIN, HIGH);  // LED 켜기
+    delay(1000);  // 1초 대기
+    digitalWrite(B_LED_PIN, LOW);  // LED 끄기
+    delay(1000);  // 1초 대기
+
+    // Fade
+    for (int brightness = 0; brightness <= 255; brightness += B_FADE_SPEED) {
+      analogWrite(B_LED_PIN, brightness);  // 밝기 설정
+      delay(10);  // 10밀리초 대기
+    }
+    for (int brightness = 255; brightness >= 0; brightness -= B_FADE_SPEED) {
+      analogWrite(B_LED_PIN, brightness);  // 밝기 설정
+      delay(10);  // 10밀리초 대기
+    }
+  }
+}

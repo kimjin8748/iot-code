@@ -1,0 +1,17 @@
+int LED= 9;
+const int buzzerPin = 10; // 부저 핀 설정
+const int lightSensorPin = A0; // 조도 센서 핀 설정
+void setup() {
+	Serial.begin(9600);
+	pinMode(LED, OUTPUT);
+  	pinMode(buzzerPin, OUTPUT); // 부저 핀을 출력 모드로 설정
+  	pinMode(lightSensorPin, INPUT); // 조도 센서 핀을 입력 모드로 설정
+}
+void loop() {
+	int data=analogRead(lightSensorPin); //조도센서
+	analogWrite(LED, map(data,0,1023,0,255)); // LED PWM
+  	int pitch = map(data, 0, 1023, 0, 255);
+  	tone(buzzerPin, pitch, 20); // 부저 소리 출력
+	Serial.println(data);
+	delay(300);
+}

@@ -1,0 +1,22 @@
+#include<Servo.h> // 서보모터 헤더파일
+Servo myservo; // Servo 객체 선언
+int Btn0 = 8; // 1번째 스위치
+int Btn1 = 9; // 2번째 스위치
+int Btn2 = 10; // 3번째 스위치
+void setup() {
+	myservo.attach(11); // 서보모터와 핀을 연결 시켜준다
+	pinMode(Btn0, INPUT);
+	pinMode(Btn1, INPUT);
+	pinMode(Btn2, INPUT);
+}
+void loop() {
+  if(digitalRead(Btn0) == LOW)
+		myservo.write(0); // 서보모터의 각도를 정의(0 ~ 180 까지)
+  
+  else if(digitalRead(Btn1) == LOW)
+		myservo.write(90); // 모터 90도
+  
+  else (digitalRead(Btn2) == LOW)
+		myservo.write(180); // 모터 180도
+  
+}

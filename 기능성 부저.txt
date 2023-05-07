@@ -1,0 +1,17 @@
+const
+int buzzer Pin = 9; // 부저 핀 설정
+const int lightSensorPin= A0; // 조도 센서 핀 설정
+
+void setup() {
+Serial.begin(9600);
+pinMode (buzzer Pin, OUTPUT); // 부저 핀을 출력 모드로 설정
+pinMode (light Sensor Pin, INPUT); // 조도 센서 핀을 입력 모드로 설정
+}
+void loop() {
+int lightValue = analogRead (lightSensorPin); // 조도 센서 값 읽기
+int pitch = map(lightValue, 0, 1023, 31, 4978); // 소리 높낮이 조정
+
+tone (buzzerPin, pitch, 20); // 부저 소리 출력
+Serial.println(pitch);
+delay(1500); // 1.5 초 대기
+}

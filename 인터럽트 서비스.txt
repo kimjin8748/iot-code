@@ -1,0 +1,36 @@
+const byte ledPin = 13;
+const byte interruptPin = 3;
+volatile byte state = LOW;
+const int tempPin = A0;   // 온도센서 핀
+const int buzzerPin = 2;  // 부저 핀
+
+int buttonState = 0;      // 버튼 상태 변수
+int ledState = LOW;       // LED 상태 변수
+int tempValue = 0;        // 온도 값 변수
+unsigned long lastInterruptTime = 0;  // 마지막 인터럽트 시간 변수
+void setup() {
+	pinMode(ledPin, OUTPUT);
+	pinMode(interruptPin, INPUT_PULLUP);
+	attachInterrupt(digitalPinToInterrupt(interruptPin), blink, CHANGE);
+// attachInterrupt(0, blink, CHANGE);
+  pinMode(buzzerPin, OUTPUT);
+  Serial.begin(9600);
+}
+void loop() {
+	digitalWrite(ledPin, state);
+  
+  int newTempValue = analogRead(tempPin);
+  if (newTempValue > tempValue + 5 || newTempValue < tempValue - 5) {
+    tone(buzzerPin, 1000, 500); // 부저 울림
+    tempValue = newTempValue;
+  }
+  
+  unsigned long currentTime = millis();
+  if (currentTime - lastInterruptTime > 1000) { // 1초마다 출력
+    Serial.println(currentTime);
+    lastInterruptTime = currentTime;
+  }
+}
+void blink() {
+	state = !state;
+}

@@ -1,0 +1,33 @@
+#define LED 13
+#define BUTTON 5
+long previousMillis = 0;
+long interval = 3000;
+unsigned long pm = 0;
+long it = 1000;
+void setup() {
+	pinMode(LED, OUTPUT);
+	pinMode(BUTTON, INPUT_PULLUP);
+	Serial.begin(9600);
+}
+void loop() {
+	unsigned long currentMillis = millis(); // 현재 시간 측정  	
+	char c = Serial.read();
+	if (digitalRead(BUTTON) == LOW) {
+		previousMillis = currentMillis;
+		digitalWrite(LED, HIGH);
+}
+	else {
+		if (c == 'x')
+			Serial.println("kimyongjin202045070");
+}
+	
+  if (currentMillis - previousMillis > interval)
+		digitalWrite(LED, LOW);
+  		
+  
+  	if(currentMillis - pm >= it) {
+    	pm = currentMillis;
+      	Serial.print("time:");
+    	Serial.println(currentMillis);
+  }
+}

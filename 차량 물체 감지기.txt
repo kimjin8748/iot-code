@@ -1,0 +1,31 @@
+
+const int trigPin = 2;
+const int echoPin = 4; 
+const int buzzer Pin = 11;
+void setup() {
+pinMode (trigPin, OUTPUT); 
+pinMode (echo Pin, INPUT); 
+pinMode (buzzer Pin, OUTPUT); 
+Serial.begin(9600);
+}
+
+void loop() {
+digitalWrite(trigPin, LOW);
+delay (30);
+
+digitalWrite(trigPin, HIGH);
+delay (30);
+digitalWrite (trigPin, LOW);
+
+long duration = pulse In (echo Pin, HIGH); 
+float distance = duration * 0.034 / 2;
+
+Serial.print ("Distance: ");
+Serial.print(distance); 
+Serial.println(" cm");
+
+int buzzerValue = map (distance, 0, 100, 50, 255); 
+analogWrite (buzzer Pin, buzzerValue);
+
+delay(100);
+}

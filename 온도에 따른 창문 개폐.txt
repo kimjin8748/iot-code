@@ -1,0 +1,47 @@
+#include <Servo.h>
+
+#define TMP36PIN A0     // TMP36 온도 센서의 핀
+Servo myservo;          // SG90 서보모터 객체 생성
+int pos = 0;            // 서보모터의 초기 위치
+
+void setup() {
+  Serial.begin(9600);   // 시리얼 통신 시작
+  myservo.attach(9);    // 서보모터를 9번 핀에 연결
+  myservo.write(pos);   // 서보모터 위치 초기화
+}
+
+void loop() {
+  delay(2000);  // 2초마다 온도 측정 및 처리
+
+  int tmp36Value = analogRead(TMP36PIN);   // TMP36 온도 측정
+
+  float voltage = tmp36Value * 5.0 / 1024.0;   // TMP36 온도 센서의 출력전압 측정
+  float temperatureC = (voltage - 0.5) * 100;   // 온도(섭씨) 계산
+  
+  Serial.print("Temperature: ");
+  Serial.print(temperatureC);
+  Serial.println("C");
+  
+  int value = analogRead(A0);
+	Serial.print("value : ");
+	Serial.println(value);
+	int pos = map(value, 0, 1023, 0, 180);  
+	myservo.write(pos);
+  
+  if (temperatureC > 30) {   // 온도가 25도 이상인 경우
+    pos = 180;   // 창문을 180도로 열기
+    Serial.println("Window open");
+    delay(30);
+  } else if(temperatureC > 15 || temperatureC < 25){ 
+    // 온도가 10도 이상 20도 이하인경우
+    pos = 90;  // 창문을 90도로 열기
+    Serial.println("Window open");
+    delay(30);
+  } else if(temperatureC < 10){
+    pos = 0;  // 창문을 닫기
+    Serial.println("Window clse");
+    delay(30);
+  }
+
+  myservo.write(pos);   // 서보모터로 창문 조작
+}
